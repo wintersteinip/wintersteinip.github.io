@@ -1,262 +1,1980 @@
-<!doctype html>
-<html lang="en" class="h-100" data-bs-theme="auto">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="" />
-    <meta
-      name="author"
-      content="Mark Otto, Jacob Thornton, and Bootstrap contributors"
-    />
-    <meta name="generator" content="Astro v5.13.2" />
-    <title>Sticky Footer Navbar Template · Bootstrap v5.3</title>
-    <link
-      rel="canonical"
-      href="https://getbootstrap.com/docs/5.3/examples/sticky-footer-navbar/"
-    />
-    <script src="../assets/js/color-modes.js"></script>
-    <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <meta name="theme-color" content="#712cf9" />
-    <link href="sticky-footer-navbar.css" rel="stylesheet" />
-    <style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        user-select: none;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+
+  <!-- SEO and responsive configuration -->
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="AETHER AISTEIN is a nonprofit technology initiative building transparent, human-centered infrastructure to eliminate greed from systems that affect everyone."
+  />
+  <meta
+    name="keywords"
+    content="AETHER AISTEIN, artificial intelligence, nonprofit, ethical technology, eliminate greed, open infrastructure"
+  />
+  <meta name="author" content="AETHER AISTEIN" />
+  <meta name="theme-color" content="#080b13" />
+
+  <!-- Open Graph metadata -->
+  <meta property="og:title" content="AETHER AISTEIN — Our AI Will Eliminate Greed" />
+  <meta
+    property="og:description"
+    content="A nonprofit building transparent AI infrastructure for a more equitable future."
+  />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://picsum.photos/1200/630?random=31" />
+
+  <title>AETHER AISTEIN — Our AI Will Eliminate Greed</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Bootstrap and Font Awesome -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  />
+
+  <style>
+    /* =========================================================
+       DESIGN TOKENS
+    ========================================================= */
+    :root {
+      --bg: #080b13;
+      --bg-soft: #101522;
+      --surface: rgba(19, 26, 42, 0.8);
+      --surface-solid: #131a2a;
+      --text: #f3f7ff;
+      --muted: #9ca8bd;
+      --line: rgba(255, 255, 255, 0.11);
+      --primary: #7c5cff;
+      --primary-dark: #6545eb;
+      --cyan: #38e6d2;
+      --pink: #ff5da2;
+      --warning: #ffc857;
+      --shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+      --radius: 20px;
+      --nav-height: 76px;
+      --transition: 220ms ease;
+    }
+
+    [data-theme="light"] {
+      --bg: #f4f7fb;
+      --bg-soft: #e9eef7;
+      --surface: rgba(255, 255, 255, 0.82);
+      --surface-solid: #ffffff;
+      --text: #101522;
+      --muted: #5f6c80;
+      --line: rgba(16, 21, 34, 0.12);
+      --shadow: 0 20px 50px rgba(39, 52, 79, 0.14);
+    }
+
+    /* =========================================================
+       GLOBAL STYLES
+    ========================================================= */
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 90px;
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 10% 20%, rgba(124, 92, 255, 0.13), transparent 28rem),
+        radial-gradient(circle at 90% 70%, rgba(56, 230, 210, 0.09), transparent 28rem),
+        var(--bg);
+      color: var(--text);
+      font-family: "Inter", sans-serif;
+      overflow-x: hidden;
+      transition: background var(--transition), color var(--transition);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .text-muted-custom {
+      color: var(--muted);
+    }
+
+    .mono {
+      font-family: "Space Mono", monospace;
+    }
+
+    .section {
+      position: relative;
+      padding: 76px 0;
+    }
+
+    .section-compact {
+      padding: 52px 0;
+    }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+      color: var(--cyan);
+      font-family: "Space Mono", monospace;
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .section-label::before {
+      content: "";
+      width: 28px;
+      height: 1px;
+      background: var(--cyan);
+    }
+
+    .display-title {
+      max-width: 880px;
+      font-size: clamp(2.5rem, 7vw, 6.2rem);
+      font-weight: 800;
+      line-height: 0.98;
+      letter-spacing: -0.065em;
+    }
+
+    .gradient-text {
+      background: linear-gradient(110deg, var(--cyan), var(--primary), var(--pink));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .btn {
+      border-radius: 999px;
+      padding: 0.78rem 1.25rem;
+      font-weight: 700;
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-primary-custom {
+      color: white;
+      border: 1px solid transparent;
+      background: linear-gradient(110deg, var(--primary), var(--pink));
+      box-shadow: 0 8px 25px rgba(124, 92, 255, 0.28);
+    }
+
+    .btn-outline-custom {
+      color: var(--text);
+      border: 1px solid var(--line);
+      background: var(--surface);
+      backdrop-filter: blur(12px);
+    }
+
+    .btn-outline-custom:hover {
+      color: var(--text);
+      border-color: var(--cyan);
+    }
+
+    /* =========================================================
+       PRELOADER
+    ========================================================= */
+    #preloader {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: grid;
+      place-items: center;
+      background: var(--bg);
+      transition: opacity 500ms ease, visibility 500ms ease;
+    }
+
+    #preloader.loaded {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .loader-mark {
+      display: grid;
+      gap: 16px;
+      place-items: center;
+      color: var(--cyan);
+    }
+
+    .loader-ring {
+      width: 58px;
+      height: 58px;
+      border: 2px solid rgba(56, 230, 210, 0.2);
+      border-top-color: var(--cyan);
+      border-right-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 900ms linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
       }
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
+    }
+
+    /* =========================================================
+       NAVIGATION
+    ========================================================= */
+    .navbar {
+      min-height: var(--nav-height);
+      border-bottom: 1px solid var(--line);
+      background: color-mix(in srgb, var(--bg) 82%, transparent);
+      backdrop-filter: blur(18px);
+    }
+
+    .navbar-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+
+    .brand-orbit {
+      width: 28px;
+      height: 28px;
+      display: inline-grid;
+      place-items: center;
+      border: 2px solid var(--cyan);
+      border-radius: 50%;
+      color: var(--cyan);
+      font-size: 0.72rem;
+      transform: rotate(-25deg);
+    }
+
+    .navbar-nav .nav-link {
+      color: var(--muted);
+      font-size: 0.9rem;
+      transition: color var(--transition);
+    }
+
+    .navbar-nav .nav-link:hover,
+    .navbar-nav .nav-link.active {
+      color: var(--text);
+    }
+
+    .theme-toggle {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      color: var(--text);
+      background: var(--surface);
+    }
+
+    .navbar-toggler {
+      border-color: var(--line);
+    }
+
+    .navbar-toggler-icon {
+      filter: invert(1);
+    }
+
+    [data-theme="light"] .navbar-toggler-icon {
+      filter: invert(0);
+    }
+
+    /* =========================================================
+       HERO
+    ========================================================= */
+    .hero {
+      min-height: calc(100vh - var(--nav-height));
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    #particleCanvas {
+      position: absolute;
+      inset: 0;
+      z-index: -3;
+      opacity: 0.75;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      background:
+        linear-gradient(90deg, var(--bg) 0%, transparent 55%, var(--bg) 100%),
+        linear-gradient(0deg, var(--bg) 0%, transparent 35%, rgba(8, 11, 19, 0.2) 100%);
+      pointer-events: none;
+    }
+
+    .hero-orb {
+      position: absolute;
+      z-index: -1;
+      width: 420px;
+      height: 420px;
+      right: 7%;
+      top: 13%;
+      border: 1px solid rgba(56, 230, 210, 0.3);
+      border-radius: 50%;
+      box-shadow:
+        0 0 70px rgba(56, 230, 210, 0.14),
+        inset 0 0 60px rgba(124, 92, 255, 0.13);
+      animation: float 8s ease-in-out infinite;
+    }
+
+    .hero-orb::before,
+    .hero-orb::after {
+      content: "";
+      position: absolute;
+      inset: 12%;
+      border: 1px solid rgba(124, 92, 255, 0.26);
+      border-radius: 50%;
+      transform: rotate(55deg) scaleX(1.7);
+    }
+
+    .hero-orb::after {
+      transform: rotate(-35deg) scaleX(1.7);
+    }
+
+    @keyframes float {
+      50% {
+        transform: translateY(-18px) rotate(12deg);
       }
-      .b-example-divider {
-        width: 100%;
-        height: 3rem;
-        background-color: #0000001a;
-        border: solid rgba(0, 0, 0, 0.15);
-        border-width: 1px 0;
-        box-shadow:
-          inset 0 0.5em 1.5em #0000001a,
-          inset 0 0.125em 0.5em #00000026;
+    }
+
+    .hero-copy {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 24px;
+      color: var(--cyan);
+      font-family: "Space Mono", monospace;
+      font-size: 0.76rem;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+    }
+
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--pink);
+      box-shadow: 0 0 0 7px rgba(255, 93, 162, 0.12);
+      animation: pulse 1.7s infinite;
+    }
+
+    @keyframes pulse {
+      50% {
+        box-shadow: 0 0 0 13px rgba(255, 93, 162, 0);
       }
-      .b-example-vr {
-        flex-shrink: 0;
-        width: 1.5rem;
-        height: 100vh;
+    }
+
+    .hero-description {
+      max-width: 640px;
+      margin: 28px 0;
+      color: var(--muted);
+      font-size: 1.08rem;
+      line-height: 1.8;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      margin-top: 30px;
+      color: var(--muted);
+      font-family: "Space Mono", monospace;
+      font-size: 0.74rem;
+    }
+
+    .hero-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    /* =========================================================
+       CARDS AND CONTENT
+    ========================================================= */
+    .glass-card {
+      height: 100%;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+    }
+
+    .feature-card {
+      position: relative;
+      height: 100%;
+      padding: 28px;
+      overflow: hidden;
+      transition: transform var(--transition), border-color var(--transition);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-7px);
+      border-color: rgba(56, 230, 210, 0.45);
+    }
+
+    .feature-card::after {
+      content: "";
+      position: absolute;
+      width: 140px;
+      height: 140px;
+      right: -55px;
+      bottom: -65px;
+      border-radius: 50%;
+      background: rgba(124, 92, 255, 0.16);
+      filter: blur(4px);
+    }
+
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 22px;
+      border: 1px solid rgba(56, 230, 210, 0.25);
+      border-radius: 14px;
+      color: var(--cyan);
+      background: rgba(56, 230, 210, 0.08);
+      font-size: 1.15rem;
+    }
+
+    .feature-card h3 {
+      font-size: 1.13rem;
+    }
+
+    .feature-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .manifesto {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(124, 92, 255, 0.35);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(125deg, rgba(124, 92, 255, 0.17), transparent 45%),
+        var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    .manifesto-inner {
+      position: relative;
+      z-index: 1;
+      padding: clamp(28px, 6vw, 72px);
+    }
+
+    .manifesto blockquote {
+      max-width: 850px;
+      margin: 0;
+      font-size: clamp(1.7rem, 4vw, 3.6rem);
+      font-weight: 700;
+      line-height: 1.08;
+      letter-spacing: -0.05em;
+    }
+
+    .manifesto::after {
+      content: "∞";
+      position: absolute;
+      right: 5%;
+      bottom: -25%;
+      color: rgba(56, 230, 210, 0.08);
+      font-size: 22rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    /* =========================================================
+       STATS
+    ========================================================= */
+    .stat-card {
+      padding: 26px;
+      text-align: center;
+    }
+
+    .stat-number {
+      display: block;
+      color: var(--cyan);
+      font-family: "Space Mono", monospace;
+      font-size: clamp(2rem, 5vw, 3.6rem);
+      font-weight: 700;
+    }
+
+    .stat-label {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    /* =========================================================
+       TIMELINE
+    ========================================================= */
+    .timeline {
+      position: relative;
+      margin-left: 13px;
+      padding-left: 32px;
+      border-left: 1px solid var(--line);
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 30px;
+    }
+
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      width: 13px;
+      height: 13px;
+      left: -39px;
+      top: 5px;
+      border: 3px solid var(--bg);
+      border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 0 1px var(--cyan);
+    }
+
+    .timeline-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .timeline-item h3 {
+      font-size: 1.1rem;
+    }
+
+    .timeline-item p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* =========================================================
+       CAROUSEL
+    ========================================================= */
+    .testimonial-card {
+      min-height: 260px;
+      padding: 34px;
+    }
+
+    .testimonial-card blockquote {
+      margin: 20px 0;
+      font-size: 1.3rem;
+      line-height: 1.5;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .testimonial-author img {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .carousel-indicators [data-bs-target] {
+      width: 8px;
+      height: 8px;
+      border: 0;
+      border-radius: 50%;
+    }
+
+    /* =========================================================
+       PRICING
+    ========================================================= */
+    .pricing-card {
+      position: relative;
+      padding: 30px;
+    }
+
+    .pricing-card.featured {
+      border-color: var(--primary);
+      transform: translateY(-8px);
+    }
+
+    .pricing-badge {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      padding: 5px 9px;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--primary);
+      font-family: "Space Mono", monospace;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+    }
+
+    .price {
+      margin: 20px 0;
+      font-size: 2.8rem;
+      font-weight: 800;
+    }
+
+    .price small {
+      color: var(--muted);
+      font-size: 0.85rem;
+      font-weight: 400;
+    }
+
+    .pricing-list {
+      display: grid;
+      gap: 12px;
+      margin: 25px 0;
+      padding: 0;
+      color: var(--muted);
+      list-style: none;
+    }
+
+    .pricing-list li {
+      display: flex;
+      gap: 9px;
+    }
+
+    .pricing-list i {
+      color: var(--cyan);
+      margin-top: 4px;
+    }
+
+    /* =========================================================
+       GALLERY
+    ========================================================= */
+    .gallery-item {
+      position: relative;
+      height: 230px;
+      overflow: hidden;
+      border-radius: 16px;
+      cursor: pointer;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 500ms ease;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.08);
+    }
+
+    .gallery-overlay {
+      position: absolute;
+      inset: auto 0 0;
+      padding: 20px;
+      color: white;
+      background: linear-gradient(transparent, rgba(0, 0, 0, 0.82));
+    }
+
+    /* =========================================================
+       FORMS
+    ========================================================= */
+    .form-control,
+    .form-select {
+      min-height: 50px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      color: var(--text);
+      background: var(--surface);
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+      border-color: var(--cyan);
+      color: var(--text);
+      background: var(--surface);
+      box-shadow: 0 0 0 4px rgba(56, 230, 210, 0.1);
+    }
+
+    .form-control::placeholder {
+      color: var(--muted);
+    }
+
+    textarea.form-control {
+      min-height: 140px;
+    }
+
+    /* =========================================================
+       FAQ
+    ========================================================= */
+    .accordion-item {
+      margin-bottom: 10px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 13px !important;
+      background: var(--surface);
+    }
+
+    .accordion-button {
+      color: var(--text);
+      background: transparent;
+      box-shadow: none !important;
+    }
+
+    .accordion-button:not(.collapsed) {
+      color: var(--cyan);
+      background: rgba(56, 230, 210, 0.06);
+    }
+
+    .accordion-button::after {
+      filter: invert(1);
+    }
+
+    [data-theme="light"] .accordion-button::after {
+      filter: invert(0);
+    }
+
+    .accordion-body {
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* =========================================================
+       FOOTER AND FLOATING CONTROLS
+    ========================================================= */
+    footer {
+      padding: 40px 0 110px;
+      border-top: 1px solid var(--line);
+    }
+
+    .social-link {
+      width: 38px;
+      height: 38px;
+      display: inline-grid;
+      place-items: center;
+      margin-right: 5px;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      color: var(--muted);
+      transition: color var(--transition), border-color var(--transition);
+    }
+
+    .social-link:hover {
+      color: var(--cyan);
+      border-color: var(--cyan);
+    }
+
+    .sticky-cta {
+      position: fixed;
+      right: 22px;
+      bottom: 20px;
+      z-index: 1000;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    #backToTop {
+      position: fixed;
+      right: 22px;
+      bottom: 82px;
+      z-index: 999;
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      color: var(--text);
+      background: var(--surface-solid);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--transition), transform var(--transition);
+    }
+
+    #backToTop.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* =========================================================
+       SCROLL ANIMATION AND CUSTOM CURSOR
+    ========================================================= */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 700ms ease, transform 700ms ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .cursor-dot,
+    .cursor-ring {
+      position: fixed;
+      z-index: 10000;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+    }
+
+    .cursor-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--cyan);
+    }
+
+    .cursor-ring {
+      width: 28px;
+      height: 28px;
+      border: 1px solid rgba(56, 230, 210, 0.7);
+      transition: width 160ms ease, height 160ms ease;
+    }
+
+    @media (pointer: coarse) {
+      .cursor-dot,
+      .cursor-ring {
+        display: none;
       }
-      .bi {
-        vertical-align: -0.125em;
-        fill: currentColor;
+    }
+
+    @media (max-width: 991px) {
+      .hero-orb {
+        right: -130px;
+        top: 22%;
+        opacity: 0.5;
       }
-      .nav-scroller {
-        position: relative;
-        z-index: 2;
-        height: 2.75rem;
-        overflow-y: hidden;
+
+      .navbar-collapse {
+        padding: 15px 0;
       }
-      .nav-scroller .nav {
-        display: flex;
-        flex-wrap: nowrap;
-        padding-bottom: 1rem;
-        margin-top: -1px;
-        overflow-x: auto;
-        text-align: center;
-        white-space: nowrap;
-        -webkit-overflow-scrolling: touch;
+
+      .pricing-card.featured {
+        transform: none;
       }
-      .btn-bd-primary {
-        --bd-violet-bg: #712cf9;
-        --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
-        --bs-btn-font-weight: 600;
-        --bs-btn-color: var(--bs-white);
-        --bs-btn-bg: var(--bd-violet-bg);
-        --bs-btn-border-color: var(--bd-violet-bg);
-        --bs-btn-hover-color: var(--bs-white);
-        --bs-btn-hover-bg: #6528e0;
-        --bs-btn-hover-border-color: #6528e0;
-        --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
-        --bs-btn-active-color: var(--bs-btn-hover-color);
-        --bs-btn-active-bg: #5a23c8;
-        --bs-btn-active-border-color: #5a23c8;
+    }
+
+    @media (max-width: 575px) {
+      .section {
+        padding: 58px 0;
       }
-      .bd-mode-toggle {
-        z-index: 1500;
+
+      .hero {
+        min-height: 760px;
       }
-      .bd-mode-toggle .bi {
-        width: 1em;
-        height: 1em;
+
+      .hero-orb {
+        width: 290px;
+        height: 290px;
       }
-      .bd-mode-toggle .dropdown-menu .active .bi {
-        display: block !important;
+
+      .sticky-cta {
+        right: 15px;
+        bottom: 15px;
       }
-    </style>
-  </head>
-  <body class="d-flex flex-column h-100">
-    <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
-      <symbol id="check2" viewBox="0 0 16 16">
-        <path
-          d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"
-        ></path>
-      </symbol>
-      <symbol id="circle-half" viewBox="0 0 16 16">
-        <path
-          d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"
-        ></path>
-      </symbol>
-      <symbol id="moon-stars-fill" viewBox="0 0 16 16">
-        <path
-          d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"
-        ></path>
-        <path
-          d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"
-        ></path>
-      </symbol>
-      <symbol id="sun-fill" viewBox="0 0 16 16">
-        <path
-          d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"
-        ></path>
-      </symbol>
-    </svg>
-    <div
-      class="dropdown position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle"
-    >
-      <button
-        class="btn btn-bd-primary py-2 dropdown-toggle d-flex align-items-center"
-        id="bd-theme"
-        type="button"
-        aria-expanded="false"
-        data-bs-toggle="dropdown"
-        aria-label="Toggle theme (auto)"
-      >
-        <svg class="bi my-1 theme-icon-active" aria-hidden="true">
-          <use href="#circle-half"></use>
-        </svg>
-        <span class="visually-hidden" id="bd-theme-text">Toggle theme</span>
-      </button>
-      <ul
-        class="dropdown-menu dropdown-menu-end shadow"
-        aria-labelledby="bd-theme-text"
-      >
-        <li>
-          <button
-            type="button"
-            class="dropdown-item d-flex align-items-center"
-            data-bs-theme-value="light"
-            aria-pressed="false"
-          >
-            <svg class="bi me-2 opacity-50" aria-hidden="true">
-              <use href="#sun-fill"></use>
-            </svg>
-            Light
-            <svg class="bi ms-auto d-none" aria-hidden="true">
-              <use href="#check2"></use>
-            </svg>
-          </button>
-        </li>
-        <li>
-          <button
-            type="button"
-            class="dropdown-item d-flex align-items-center"
-            data-bs-theme-value="dark"
-            aria-pressed="false"
-          >
-            <svg class="bi me-2 opacity-50" aria-hidden="true">
-              <use href="#moon-stars-fill"></use>
-            </svg>
-            Dark
-            <svg class="bi ms-auto d-none" aria-hidden="true">
-              <use href="#check2"></use>
-            </svg>
-          </button>
-        </li>
-        <li>
-          <button
-            type="button"
-            class="dropdown-item d-flex align-items-center active"
-            data-bs-theme-value="auto"
-            aria-pressed="true"
-          >
-            <svg class="bi me-2 opacity-50" aria-hidden="true">
-              <use href="#circle-half"></use>
-            </svg>
-            Auto
-            <svg class="bi ms-auto d-none" aria-hidden="true">
-              <use href="#check2"></use>
-            </svg>
-          </button>
-        </li>
-      </ul>
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+
+      .reveal {
+        opacity: 1;
+        transform: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Accessible loading screen -->
+  <div id="preloader" aria-label="Loading AETHER AISTEIN">
+    <div class="loader-mark">
+      <div class="loader-ring"></div>
+      <span class="mono">INITIALIZING ETHICAL INTELLIGENCE...</span>
     </div>
-    <header>
-      <!-- Fixed navbar -->
-      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">Fixed navbar</a>
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarCollapse"
-            aria-controls="navbarCollapse"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav me-auto mb-2 mb-md-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
-              </li>
-              <li class="nav-item"><a class="nav-link" href="#">Link</a></li>
-              <li class="nav-item">
-                <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-              </li>
-            </ul>
-            <form class="d-flex" role="search">
-              <input
-                class="form-control me-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-              <button class="btn btn-outline-success" type="submit">
-                Search
-              </button>
-            </form>
+  </div>
+
+  <!-- Custom cursor -->
+  <div class="cursor-dot"></div>
+  <div class="cursor-ring"></div>
+
+  <!-- Fixed navigation -->
+  <nav class="navbar navbar-expand-lg fixed-top" aria-label="Primary navigation">
+    <div class="container">
+      <a class="navbar-brand" href="#top" aria-label="AETHER AISTEIN home">
+        <span class="brand-orbit">A</span>
+        <span>AETHER AISTEIN</span>
+      </a>
+
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#mainNav"
+        aria-controls="mainNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-3">
+          <li class="nav-item"><a class="nav-link" href="#mission">Mission</a></li>
+          <li class="nav-item"><a class="nav-link" href="#systems">Systems</a></li>
+          <li class="nav-item"><a class="nav-link" href="#roadmap">Roadmap</a></li>
+          <li class="nav-item"><a class="nav-link" href="#faq">FAQ</a></li>
+          <li class="nav-item mt-3 mt-lg-0">
+            <a class="btn btn-primary-custom btn-sm" href="#join">Join the rebellion</a>
+          </li>
+          <li class="nav-item mt-3 mt-lg-0">
+            <button
+              class="theme-toggle"
+              id="themeToggle"
+              type="button"
+              aria-label="Switch color theme"
+              title="Switch color theme"
+            >
+              <i class="fa-solid fa-sun"></i>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main id="top">
+    <!-- Hero -->
+    <section class="hero section" aria-labelledby="hero-title">
+      <canvas id="particleCanvas" aria-hidden="true"></canvas>
+      <div class="hero-orb" data-parallax="0.12" aria-hidden="true"></div>
+
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-9 hero-copy reveal">
+            <div class="hero-kicker">
+              <span class="pulse-dot"></span>
+              <span>Public beta protocol // 2026</span>
+            </div>
+
+            <h1 id="hero-title" class="display-title">
+              OUR AI WILL
+              <span class="gradient-text">ELIMINATE GREED.</span>
+            </h1>
+
+            <p class="hero-description">
+              We are building nonprofit infrastructure for a future where intelligence
+              serves everyone—not only whoever has the most money, influence, or lawyers.
+              The joke is deadpan. The mission is serious.
+            </p>
+
+            <div class="d-flex flex-wrap gap-3">
+              <a class="btn btn-primary-custom" href="#join">
+                Enter the experiment
+                <i class="fa-solid fa-arrow-right ms-2"></i>
+              </a>
+              <a class="btn btn-outline-custom" href="#mission">
+                Read the manifesto
+              </a>
+            </div>
+
+            <div class="hero-meta">
+              <span><i class="fa-solid fa-circle-check"></i> Nonprofit-first</span>
+              <span><i class="fa-solid fa-code-branch"></i> Open infrastructure</span>
+              <span><i class="fa-solid fa-scale-balanced"></i> Human accountability</span>
+            </div>
           </div>
         </div>
-      </nav>
-    </header>
-    <!-- Begin page content -->
-    <main class="flex-shrink-0">
-      <div class="container">
-        <h1 class="mt-5">Sticky footer with fixed navbar</h1>
-        <p class="lead">
-          Pin a footer to the bottom of the viewport in desktop browsers with
-          this custom HTML and CSS. A fixed navbar has been added with
-          <code class="small">padding-top: 60px;</code> on the
-          <code class="small">main &gt; .container</code>.
-        </p>
-        <p>
-          Back to
-          <a href="../examples/sticky-footer/">the default sticky footer</a>
-          minus the navbar.
-        </p>
       </div>
-    </main>
-    <footer class="footer mt-auto py-3 bg-body-tertiary">
+    </section>
+
+    <!-- Mission -->
+    <section id="mission" class="section section-compact">
       <div class="container">
-        <span class="text-body-secondary"
-          >Place sticky footer content here.</span
-        >
+        <div class="row g-4 align-items-center">
+          <div class="col-lg-5 reveal">
+            <span class="section-label">The premise</span>
+            <h2 class="display-6 fw-bold">
+              If intelligence is powerful, access to it should not be.
+            </h2>
+            <p class="text-muted-custom mt-4">
+              AETHER AISTEIN is a nonprofit initiative exploring how artificial
+              intelligence can reduce waste, expose manipulation, and help people
+              solve difficult problems together.
+            </p>
+          </div>
+
+          <div class="col-lg-7 reveal">
+            <div class="manifesto">
+              <div class="manifesto-inner">
+                <blockquote>
+                  “AI will replace billions of jobs.”
+                  <span class="gradient-text">Excellent.</span>
+                  Let’s replace the jobs that exist only because systems are needlessly
+                  complicated, predatory, and designed to protect greed.
+                </blockquote>
+                <p class="text-muted-custom mt-4 mb-0">
+                  Our goal is not to remove human purpose. Our goal is to remove
+                  artificial scarcity, unnecessary bureaucracy, and incentives that reward
+                  exploitation.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </footer>
-    <script
-      src="../assets/dist/js/bootstrap.bundle.min.js"
-      class="astro-vvvwv3sm"
-    ></script>
-  </body>
+    </section>
+
+    <!-- Statistics -->
+    <section class="section section-compact">
+      <div class="container">
+        <div class="row g-3 reveal">
+          <div class="col-6 col-lg-3">
+            <div class="glass-card stat-card">
+              <span class="stat-number" data-target="100">0</span>
+              <span class="stat-label">Years of problems we can simplify</span>
+            </div>
+          </div>
+          <div class="col-6 col-lg-3">
+            <div class="glass-card stat-card">
+              <span class="stat-number" data-target="0">0</span>
+              <span class="stat-label">Trillionaires required</span>
+            </div>
+          </div>
+          <div class="col-6 col-lg-3">
+            <div class="glass-card stat-card">
+              <span class="stat-number" data-target="1">0</span>
+              <span class="stat-label">Shared public mission</span>
+            </div>
+          </div>
+          <div class="col-6 col-lg-3">
+            <div class="glass-card stat-card">
+              <span class="stat-number" data-target="∞">0</span>
+              <span class="stat-label">People who deserve a voice</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Systems -->
+    <section id="systems" class="section">
+      <div class="container">
+        <div class="row mb-5 reveal">
+          <div class="col-lg-8">
+            <span class="section-label">Operating systems for society</span>
+            <h2 class="display-6 fw-bold">Build tools that make exploitation harder.</h2>
+            <p class="text-muted-custom mt-3">
+              Our initial concepts combine transparent automation, public-interest
+              research, and playful cultural disruption.
+            </p>
+          </div>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-md-6 col-lg-4 reveal">
+            <article class="glass-card feature-card">
+              <div class="feature-icon"><i class="fa-solid fa-eye"></i></div>
+              <h3>Radical transparency</h3>
+              <p>
+                Make decisions, incentives, data flows, and conflicts of interest
+                understandable enough for a fifth grader to inspect.
+              </p>
+            </article>
+          </div>
+
+          <div class="col-md-6 col-lg-4 reveal">
+            <article class="glass-card feature-card">
+              <div class="feature-icon"><i class="fa-solid fa-shield-halved"></i></div>
+              <h3>Anti-manipulation design</h3>
+              <p>
+                Create systems that identify deceptive patterns, slow down coercion,
+                and make it difficult to weaponize complexity.
+              </p>
+            </article>
+          </div>
+
+          <div class="col-md-6 col-lg-4 reveal">
+            <article class="glass-card feature-card">
+              <div class="feature-icon"><i class="fa-solid fa-people-group"></i></div>
+              <h3>Collective intelligence</h3>
+              <p>
+                Give communities better tools to reason together without requiring
+                everyone to become a lawyer, economist, or engineer.
+              </p>
+            </article>
+          </div>
+
+          <div class="col-md-6 col-lg-4 reveal">
+            <article class="glass-card feature-card">
+              <div class="feature-icon"><i class="fa-solid fa-bug"></i></div>
+              <h3>Greed stings</h3>
+              <p>
+                Satirical campaigns expose predatory behavior by parodying the
+                manipulative advertisements and promises used to trap people.
+              </p>
+            </article>
+          </div>
+
+          <div class="col-md-6 col-lg-4 reveal">
+            <article class="glass-card feature-card">
+              <div class="feature-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+              <h3>Bias accountability</h3>
+              <p>
+                Replace hidden assumptions with documented tests, competing viewpoints,
+                and public feedback loops.
+              </p>
+            </article>
+          </div>
+
+          <div class="col-md-6 col-lg-4 reveal">
+            <article class="glass-card feature-card">
+              <div class="feature-icon"><i class="fa-solid fa-seedling"></i></div>
+              <h3>Public-benefit infrastructure</h3>
+              <p>
+                Develop reusable systems that remain useful even when they cannot be
+                turned into a billion-dollar monopoly.
+              </p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonial carousel -->
+    <section class="section section-compact">
+      <div class="container">
+        <div class="row g-4 align-items-center">
+          <div class="col-lg-4 reveal">
+            <span class="section-label">Field reports</span>
+            <h2 class="display-6 fw-bold">The future is weird. Good.</h2>
+            <p class="text-muted-custom">
+              These fictional quotes represent the type of public reaction we expect
+              when the joke becomes a working institution.
+            </p>
+          </div>
+
+          <div class="col-lg-8 reveal">
+            <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel">
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <div class="glass-card testimonial-card">
+                    <span class="section-label">Anonymous systems thinker</span>
+                    <blockquote>
+                      “I joined because the slogan sounded like a threat. I stayed
+                      because the documentation was actually readable.”
+                    </blockquote>
+                    <div class="testimonial-author">
+                      <img src="https://picsum.photos/90/90?random=11" alt="Portrait placeholder" />
+                      <div>
+                        <strong>Beta participant 001</strong>
+                        <div class="text-muted-custom small">Community tester</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="carousel-item">
+                  <div class="glass-card testimonial-card">
+                    <span class="section-label">Formerly overworked human</span>
+                    <blockquote>
+                      “The most radical feature is that it explains what it is doing
+                      before asking me to trust it.”
+                    </blockquote>
+                    <div class="testimonial-author">
+                      <img src="https://picsum.photos/90/90?random=12" alt="Portrait placeholder" />
+                      <div>
+                        <strong>Beta participant 002</strong>
+                        <div class="text-muted-custom small">Civic technology researcher</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="carousel-item">
+                  <div class="glass-card testimonial-card">
+                    <span class="section-label">Suspicious optimist</span>
+                    <blockquote>
+                      “If this is a cult, at least the governance documents are public.”
+                    </blockquote>
+                    <div class="testimonial-author">
+                      <img src="https://picsum.photos/90/90?random=13" alt="Portrait placeholder" />
+                      <div>
+                        <strong>Beta participant 003</strong>
+                        <div class="text-muted-custom small">Independent contributor</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="carousel-indicators position-static justify-content-start mt-4">
+                <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="0" class="active" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Roadmap -->
+    <section id="roadmap" class="section">
+      <div class="container">
+        <div class="row g-5">
+          <div class="col-lg-5 reveal">
+            <span class="section-label">Launch roadmap</span>
+            <h2 class="display-6 fw-bold">Make the impossible boringly practical.</h2>
+            <p class="text-muted-custom mt-3">
+              Each stage turns the larger idea into something testable, inspectable,
+              and useful to real people.
+            </p>
+            <a href="#join" class="btn btn-outline-custom mt-3">Become a founding tester</a>
+          </div>
+
+          <div class="col-lg-7 reveal">
+            <div class="timeline">
+              <div class="timeline-item">
+                <h3>01 — Publish the provocation</h3>
+                <p>
+                  Launch the deadpan campaign: AI will replace billions of jobs,
+                  starting with the jobs greed invented.
+                </p>
+              </div>
+
+              <div class="timeline-item">
+                <h3>02 — Release the principles</h3>
+                <p>
+                  Publish plain-language standards for transparent automation,
+                  accountability, safety, and public benefit.
+                </p>
+              </div>
+
+              <div class="timeline-item">
+                <h3>03 — Build the first public tools</h3>
+                <p>
+                  Prototype explainable assistants for navigating bureaucracy,
+                  deceptive claims, and complicated decisions.
+                </p>
+              </div>
+
+              <div class="timeline-item">
+                <h3>04 — Let communities stress-test everything</h3>
+                <p>
+                  Invite researchers, organizers, artists, engineers, and skeptics to
+                  break the systems before anyone depends on them.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing / support -->
+    <section id="support" class="section section-compact">
+      <div class="container">
+        <div class="text-center mb-5 reveal">
+          <span class="section-label">Support model</span>
+          <h2 class="display-6 fw-bold">Pay what you can. Own nothing you shouldn't.</h2>
+          <p class="text-muted-custom">
+            These are contribution levels, not product paywalls.
+          </p>
+        </div>
+
+        <div class="row g-4 align-items-stretch">
+          <div class="col-md-4 reveal">
+            <div class="glass-card pricing-card">
+              <h3>Observer</h3>
+              <p class="text-muted-custom">For curious humans.</p>
+              <div class="price">$0 <small>/ forever</small></div>
+              <ul class="pricing-list">
+                <li><i class="fa-solid fa-check"></i> Public research</li>
+                <li><i class="fa-solid fa-check"></i> Campaign updates</li>
+                <li><i class="fa-solid fa-check"></i> Community access</li>
+              </ul>
+              <a href="#join" class="btn btn-outline-custom w-100">Join free</a>
+            </div>
+          </div>
+
+          <div class="col-md-4 reveal">
+            <div class="glass-card pricing-card featured">
+              <span class="pricing-badge">Most useful</span>
+              <h3>Contributor</h3>
+              <p class="text-muted-custom">For people who want to help build.</p>
+              <div class="price">$10 <small>/ month</small></div>
+              <ul class="pricing-list">
+                <li><i class="fa-solid fa-check"></i> Everything in Observer</li>
+                <li><i class="fa-solid fa-check"></i> Early prototypes</li>
+                <li><i class="fa-solid fa-check"></i> Monthly working sessions</li>
+              </ul>
+              <a href="#join" class="btn btn-primary-custom w-100">Contribute</a>
+            </div>
+          </div>
+
+          <div class="col-md-4 reveal">
+            <div class="glass-card pricing-card">
+              <h3>Institution</h3>
+              <p class="text-muted-custom">For aligned organizations.</p>
+              <div class="price">Custom</div>
+              <ul class="pricing-list">
+                <li><i class="fa-solid fa-check"></i> Partnership review</li>
+                <li><i class="fa-solid fa-check"></i> Public-interest pilots</li>
+                <li><i class="fa-solid fa-check"></i> Governance workshops</li>
+              </ul>
+              <a href="#contact" class="btn btn-outline-custom w-100">Start a conversation</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gallery -->
+    <section class="section">
+      <div class="container">
+        <div class="row mb-4 reveal">
+          <div class="col-lg-8">
+            <span class="section-label">Visual evidence</span>
+            <h2 class="display-6 fw-bold">A future worth making visible.</h2>
+          </div>
+        </div>
+
+        <div class="row g-3">
+          <div class="col-md-6 col-lg-4 reveal">
+            <button class="gallery-item border-0 p-0 w-100 text-start" data-lightbox="https://picsum.photos/1200/800?random=41" aria-label="Open image: public intelligence">
+              <img src="https://picsum.photos/800/600?random=41" alt="Abstract blue technology installation" loading="lazy" />
+              <span class="gallery-overlay">Public intelligence</span>
+            </button>
+          </div>
+
+          <div class="col-md-6 col-lg-4 reveal">
+            <button class="gallery-item border-0 p-0 w-100 text-start" data-lightbox="https://picsum.photos/1200/800?random=42" aria-label="Open image: collective systems">
+              <img src="https://picsum.photos/800/600?random=42" alt="Abstract architectural structure" loading="lazy" />
+              <span class="gallery-overlay">Collective systems</span>
+            </button>
+          </div>
+
+          <div class="col-md-6 col-lg-4 reveal">
+            <button class="gallery-item border-0 p-0 w-100 text-start" data-lightbox="https://picsum.photos/1200/800?random=43" aria-label="Open image: better defaults">
+              <img src="https://picsum.photos/800/600?random=43" alt="Abstract light and shadow composition" loading="lazy" />
+              <span class="gallery-overlay">Better defaults</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="section section-compact">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-8 reveal">
+            <div class="text-center mb-4">
+              <span class="section-label">Questions humans ask</span>
+              <h2 class="display-6 fw-bold">No mysterious black boxes.</h2>
+            </div>
+
+            <div class="accordion" id="faqAccordion">
+              <div class="accordion-item">
+                <h3 class="accordion-header">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faqOne">
+                    Is AETHER AISTEIN actually trying to eliminate all jobs?
+                  </button>
+                </h3>
+                <div id="faqOne" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                  <div class="accordion-body">
+                    No. The campaign uses an intentionally extreme statement to start a
+                    conversation. The real objective is to eliminate unnecessary,
+                    exploitative work while helping people retain meaningful agency,
+                    income, creativity, and purpose.
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h3 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqTwo">
+                    Why call the project a nonprofit?
+                  </button>
+                </h3>
+                <div id="faqTwo" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                  <div class="accordion-body">
+                    Because infrastructure affecting everyone should not be controlled
+                    solely by whoever can extract the most value from it. Legal,
+                    financial, and governance structures should be finalized with
+                    qualified professionals before launch.
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h3 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqThree">
+                    How will the project prevent abuse?
+                  </button>
+                </h3>
+                <div id="faqThree" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                  <div class="accordion-body">
+                    By documenting assumptions, testing for bias, publishing limitations,
+                    maintaining human review, inviting adversarial testing, and refusing
+                    to treat automation as a substitute for accountability.
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h3 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqFour">
+                    Is the “greed sting” campaign real?
+                  </button>
+                </h3>
+                <div id="faqFour" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                  <div class="accordion-body">
+                    It is intended as a satirical public-awareness concept. Any real
+                    campaign must comply with applicable laws, avoid impersonation,
+                    protect personal data, and be reviewed before publication.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Join and contact -->
+    <section id="join" class="section">
+      <div class="container">
+        <div class="row g-4">
+          <div class="col-lg-5 reveal">
+            <span class="section-label">Join the launch</span>
+            <h2 class="display-6 fw-bold">Help us make the joke impossible to ignore.</h2>
+            <p class="text-muted-custom mt-3">
+              Subscribe for campaign releases, research notes, prototype invitations,
+              and opportunities to challenge our assumptions.
+            </p>
+
+            <form id="newsletterForm" class="mt-4" novalidate>
+              <label for="newsletterEmail" class="visually-hidden">Email address</label>
+              <div class="input-group">
+                <input
+                  id="newsletterEmail"
+                  type="email"
+                  class="form-control"
+                  placeholder="you@example.com"
+                  required
+                  aria-describedby="newsletterMessage"
+                />
+                <button class="btn btn-primary-custom" type="submit">Subscribe</button>
+              </div>
+              <div id="newsletterMessage" class="small mt-2" role="status"></div>
+            </form>
+          </div>
+
+          <div class="col-lg-7 reveal" id="contact">
+            <div class="glass-card p-4 p-md-5">
+              <h3>Send a transmission</h3>
+              <p class="text-muted-custom">
+                Tell us what problem should be made dramatically less stupid.
+              </p>
+
+              <form id="contactForm" class="row g-3 mt-2" novalidate>
+                <div class="col-md-6">
+                  <label for="name" class="form-label">Name</label>
+                  <input id="name" type="text" class="form-control" required />
+                  <div class="invalid-feedback">Please enter your name.</div>
+                </div>
+
+                <div class="col-md-6">
+                  <label for="email" class="form-label">Email</label>
+                  <input id="email" type="email" class="form-control" required />
+                  <div class="invalid-feedback">Please enter a valid email address.</div>
+                </div>
+
+                <div class="col-12">
+                  <label for="subject" class="form-label">Subject</label>
+                  <select id="subject" class="form-select" required>
+                    <option value="">Choose a subject</option>
+                    <option>Join the volunteer network</option>
+                    <option>Suggest a public-interest project</option>
+                    <option>Discuss a partnership</option>
+                    <option>Challenge the premise</option>
+                  </select>
+                  <div class="invalid-feedback">Please select a subject.</div>
+                </div>
+
+                <div class="col-12">
+                  <label for="message" class="form-label">Message</label>
+                  <textarea id="message" class="form-control" required></textarea>
+                  <div class="invalid-feedback">Please enter a message.</div>
+                </div>
+
+                <div class="col-12">
+                  <button class="btn btn-primary-custom" type="submit">
+                    Send transmission
+                    <i class="fa-solid fa-paper-plane ms-2"></i>
+                  </button>
+                  <span id="contactMessage" class="small ms-3" role="status"></span>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Map -->
+    <section class="section section-compact">
+      <div class="container">
+        <div class="glass-card overflow-hidden reveal">
+          <!-- Replace this public embed with your organization’s actual location. -->
+          <iframe
+            title="Map showing a placeholder location for AETHER AISTEIN"
+            src="https://www.google.com/maps?q=New%20York%20City&output=embed"
+            width="100%"
+            height="320"
+            style="border:0; display:block;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row g-4 align-items-center">
+        <div class="col-lg-6">
+          <a class="navbar-brand" href="#top">
+            <span class="brand-orbit">A</span>
+            <span>AETHER AISTEIN</span>
+          </a>
+          <p class="text-muted-custom mt-3 mb-0">
+            Intelligence without extraction. Infrastructure without ownership of
+            everyone. A better default is a technical problem.
+          </p>
+        </div>
+
+        <div class="col-lg-6 text-lg-end">
+          <div class="mb-3">
+            <a class="social-link" href="#" aria-label="X / Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+            <a class="social-link" href="#" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+            <a class="social-link" href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a class="social-link" href="#" aria-label="Mastodon"><i class="fa-brands fa-mastodon"></i></a>
+          </div>
+          <small class="text-muted-custom">
+            © 2026 AETHER AISTEIN. Built for the public good.
+          </small>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Sticky call-to-action -->
+  <a href="#join" class="btn btn-primary-custom sticky-cta">
+    Join the launch <i class="fa-solid fa-arrow-up-right-from-square ms-2"></i>
+  </a>
+
+  <!-- Back-to-top button -->
+  <button id="backToTop" type="button" aria-label="Back to top">
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
+
+  <!-- Image lightbox modal -->
+  <div class="modal fade" id="lightboxModal" tabindex="-1" aria-labelledby="lightboxTitle" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+      <div class="modal-content bg-dark border-0">
+        <div class="modal-header border-0">
+          <h2 id="lightboxTitle" class="modal-title fs-5 text-white">AETHER AISTEIN gallery</h2>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close image"></button>
+        </div>
+        <div class="modal-body p-0">
+          <img id="lightboxImage" src="" alt="" class="w-100 rounded-bottom" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JavaScript -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    /*
+      AETHER AISTEIN — Frontend behavior
+      All functionality is contained in this file so the page can be deployed
+      as a standalone static site.
+    */
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const root = document.documentElement;
+
+      /* ---------------------------------------------------------
+         PRELOADER
+      --------------------------------------------------------- */
+      window.addEventListener("load", () => {
+        setTimeout(() => {
+          document.getElementById("preloader").classList.add("loaded");
+        }, 450);
+      });
+
+      /* ---------------------------------------------------------
+         DARK / LIGHT MODE
+      --------------------------------------------------------- */
+      const themeToggle = document.getElementById("themeToggle");
+      const savedTheme = localStorage.getItem("aether-theme") || "dark";
+
+      root.dataset.theme = savedTheme;
+      updateThemeIcon();
+
+      themeToggle.addEventListener("click", () => {
+        const nextTheme = root.dataset.theme === "dark" ? "light" : "dark";
+        root.dataset.theme = nextTheme;
+        localStorage.setItem("aether-theme", nextTheme);
+        updateThemeIcon();
+      });
+
+      function updateThemeIcon() {
+        const icon = themeToggle.querySelector("i");
+        icon.className =
+          root.dataset.theme === "dark"
+            ? "fa-solid fa-sun"
+            : "fa-solid fa-moon";
+      }
+
+      /* ---------------------------------------------------------
+         CANVAS PARTICLE BACKGROUND
+      --------------------------------------------------------- */
+      const canvas = document.getElementById("particleCanvas");
+      const context = canvas.getContext("2d");
+      let particles = [];
+      let animationFrame;
+
+      function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = canvas.parentElement.offsetHeight;
+      }
+
+      function createParticles() {
+        const quantity = Math.min(100, Math.floor(window.innerWidth / 14));
+
+        particles = Array.from({ length: quantity }, () => ({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          radius: Math.random() * 1.8 + 0.5,
+          velocityX: (Math.random() - 0.5) * 0.25,
+          velocityY: (Math.random() - 0.5) * 0.25,
+          opacity: Math.random() * 0.55 + 0.15
+        }));
+      }
+
+      function drawParticles() {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+
+        const styles = getComputedStyle(root);
+        const particleColor = styles.getPropertyValue("--cyan").trim();
+
+        particles.forEach((particle, index) => {
+          particle.x += particle.velocityX;
+          particle.y += particle.velocityY;
+
+          if (particle.x < 0 || particle.x > canvas.width) particle.velocityX *= -1;
+          if (particle.y < 0 || particle.y > canvas.height) particle.velocityY *= -1;
+
+          context.beginPath();
+          context.arc(
+            particle.x,
+            particle.y,
+            particle.radius,
+            0,
+            Math.PI * 2
+          );
+          context.fillStyle = particleColor;
+          context.globalAlpha = particle.opacity;
+          context.fill();
+
+          particles.slice(index + 1).forEach((other) => {
+            const dx = particle.x - other.x;
+            const dy = particle.y - other.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance < 125) {
+              context.beginPath();
+              context.moveTo(particle.x, particle.y);
+              context.lineTo(other.x, other.y);
+              context.strokeStyle = particleColor;
+              context.globalAlpha = 0.07 * (1 - distance / 125);
+              context.stroke();
+            }
+          });
+        });
+
+        context.globalAlpha = 1;
+        animationFrame = requestAnimationFrame(drawParticles);
+      }
+
+      resizeCanvas();
+      createParticles();
+      drawParticles();
+
+      window.addEventListener("resize", () => {
+        resizeCanvas();
+        createParticles();
+      });
+
+      /* ---------------------------------------------------------
+         SCROLL REVEAL ANIMATIONS
+      --------------------------------------------------------- */
+      const revealElements = document.querySelectorAll(".reveal");
+
+      const revealObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+              revealObserver.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.12 }
+      );
+
+      revealElements.forEach((element) => revealObserver.observe(element));
+
+      /* ---------------------------------------------------------
+         PARALLAX EFFECT
+      --------------------------------------------------------- */
+      const parallaxElements = document.querySelectorAll("[data-parallax]");
+
+      window.addEventListener(
+        "scroll",
+        () => {
+          const scrollPosition = window.scrollY;
+
+          parallaxElements.forEach((element) => {
+            const speed = Number(element.dataset.parallax);
+            element.style.transform =
+              `translateY(${scrollPosition * speed}px) rotate(${scrollPosition * 0.01}deg)`;
+          });
+        },
+        { passive: true }
+      );
+
+      /* ---------------------------------------------------------
+         ANIMATED STATISTICS
+      --------------------------------------------------------- */
+      const statNumbers = document.querySelectorAll(".stat-number");
+
+      const statObserver = new IntersectionObserver(
+        (entries, observer) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+
+            const element = entry.target;
+            const target = element.dataset.target;
+
+            if (target === "∞") {
+              element.textContent = "∞";
+              observer.unobserve(element);
+              return;
+            }
+
+            const numericTarget = Number(target);
+            let current = 0;
+            const increment = Math.max(1, Math.ceil(numericTarget / 45));
+
+            const timer = setInterval(() => {
+              current += increment;
+
+              if (current >= numericTarget) {
+                current = numericTarget;
+                clearInterval(timer);
+              }
+
+              element.textContent = current;
+            }, 35);
+
+            observer.unobserve(element);
+          });
+        },
+        { threshold: 0.8 }
+      );
+
+      statNumbers.forEach((element) => statObserver.observe(element));
+
+      /* ---------------------------------------------------------
+         BACK TO TOP BUTTON
+      --------------------------------------------------------- */
+      const backToTop = document.getElementById("backToTop");
+
+      window.addEventListener(
+        "scroll",
+        () => {
+          backToTop.classList.toggle("visible", window.scrollY > 650);
+        },
+        { passive: true }
+      );
+
+      backToTop.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+
+      /* ---------------------------------------------------------
+         ACTIVE NAVIGATION LINK
+      --------------------------------------------------------- */
+      const sections = document.querySelectorAll("main section[id]");
+      const navLinks = document.querySelectorAll(".nav-link");
+
+      const navigationObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+
+            navLinks.forEach((link) => {
+              link.classList.toggle(
+                "active",
+                link.getAttribute("href") === `#${entry.target.id}`
+              );
+            });
+          });
+        },
+        { rootMargin: "-35% 0px -55% 0px" }
+      );
+
+      sections.forEach((section) => navigationObserver.observe(section));
+
+      /* Close mobile navigation after selecting a link */
+      navLinks.forEach((link) => {
+        link.addEventListener("click", () => {
+          const nav = document.getElementById("mainNav");
+          const collapse = bootstrap.Collapse.getInstance(nav);
+
+          if (collapse) collapse.hide();
+        });
+      });
+
+      /* ---------------------------------------------------------
+         NEWSLETTER FORM
+      --------------------------------------------------------- */
+      document.getElementById("newsletterForm").addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        const form = event.currentTarget;
+        const email = document.getElementById("newsletterEmail");
+        const message = document.getElementById("newsletterMessage");
+
+        if (!email.checkValidity()) {
+          email.classList.add("is-invalid");
+          message.textContent = "Please enter a valid email address.";
+          message.className = "small mt-2 text-danger";
+          return;
+        }
+
+        email.classList.remove("is-invalid");
+        message.textContent = "Transmission received. Welcome to the experiment.";
+        message.className = "small mt-2 text-success";
+        form.reset();
+      });
+
+      /* ---------------------------------------------------------
+         CONTACT FORM VALIDATION
+         Replace the success handler with a real API request before launch.
+      --------------------------------------------------------- */
+      document.getElementById("contactForm").addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        const form = event.currentTarget;
+        const message = document.getElementById("contactMessage");
+
+        if (!form.checkValidity()) {
+          event.stopPropagation();
+          form.classList.add("was-validated");
+          message.textContent = "Please complete the highlighted fields.";
+          message.className = "small ms-3 text-danger";
+          return;
+        }
+
+        message.textContent = "Transmission received. We will respond soon.";
+        message.className = "small ms-3 text-success";
+        form.reset();
+        form.classList.remove("was-validated");
+      });
+
+      /* ---------------------------------------------------------
+         IMAGE LIGHTBOX
+      --------------------------------------------------------- */
+      const lightboxModal = new bootstrap.Modal(
+        document.getElementById("lightboxModal")
+      );
+
+      document.querySelectorAll("[data-lightbox]").forEach((galleryButton) => {
+        galleryButton.addEventListener("click", () => {
+          const image = document.getElementById("lightboxImage");
+          image.src = galleryButton.dataset.lightbox;
+          image.alt = galleryButton.querySelector("img").alt;
+          lightboxModal.show();
+        });
+      });
+
+      /* ---------------------------------------------------------
+         CUSTOM CURSOR
+      --------------------------------------------------------- */
+      const cursorDot = document.querySelector(".cursor-dot");
+      const cursorRing = document.querySelector(".cursor-ring");
+
+      window.addEventListener("mousemove", (event) => {
+        cursorDot.style.left = `${event.clientX}px`;
+        cursorDot.style.top = `${event.clientY}px`;
+
+        cursorRing.animate(
+          {
+            left: `${event.clientX}px`,
+            top: `${event.clientY}px`
+          },
+          {
+            duration: 250,
+            fill: "forwards"
+          }
+        );
+      });
+
+      document.querySelectorAll("a, button, .gallery-item").forEach((element) => {
+        element.addEventListener("mouseenter", () => {
+          cursorRing.style.width = "44px";
+          cursorRing.style.height = "44px";
+        });
+
+        element.addEventListener("mouseleave", () => {
+          cursorRing.style.width = "28px";
+          cursorRing.style.height = "28px";
+        });
+      });
+    });
+  </script>
+</body>
 </html>
